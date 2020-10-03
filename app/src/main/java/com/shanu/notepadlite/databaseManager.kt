@@ -20,6 +20,7 @@ class databaseManager {
         val db = DatabaseHelperNotes(context)
         sqlDB = db.writableDatabase
     }
+    // Created inner class
     inner class DatabaseHelperNotes: SQLiteOpenHelper {
         var context:Context?=null
         constructor(context:Context):super(context,dbName,null,dbVersion){
