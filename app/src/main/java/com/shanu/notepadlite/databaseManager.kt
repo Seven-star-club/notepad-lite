@@ -1,5 +1,6 @@
 package com.shanu.notepadlite
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
@@ -12,7 +13,7 @@ class databaseManager {
     val colTitle = "Title"
     val colDes = "Description"
     val dbVersion = 1
-    val sqlCreateTable = "CREATE TABLE IF NOT EXISTS" + dbTable + " (" + colID + " INTEGER PRIMARY KEY, "+
+    val sqlCreateTable = "CREATE TABLE IF NOT EXISTS " + dbTable + " (" + colID + " INTEGER PRIMARY KEY, "+
             colTitle + " TEXT, " + colDes + " TEXT);"
     var sqlDB:SQLiteDatabase?=null
 
@@ -36,8 +37,12 @@ class databaseManager {
         }
 
         override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-            TODO("Not yet implemented")
+            db!!.execSQL("Drop table IF EXISTS $dbTable")
         }
 
+    }
+    fun Insert(value:ContentValues):Long{
+        val ID = sqlDB!!.insert(dbTable,"",value)
+        return ID
     }
 }
