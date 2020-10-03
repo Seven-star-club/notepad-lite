@@ -33,18 +33,23 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/deleteButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/delete" />
-
-            <ImageView
                 android:id="@+id/editButton"
-                android:layout_width="wrap_content"
+                android:layout_width="40pt"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/edit" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/deleteButton"
+                android:layout_width="40pt"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/delete" />
 
         </LinearLayout>
 

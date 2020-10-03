@@ -9,9 +9,10 @@
     tools:context=".MainActivity">
 
     <ListView
+        android:id="@+id/lvNotes"
         android:layout_width="409dp"
-        android:background="@color/grey"
         android:layout_height="729dp"
+        android:background="@color/grey"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="1dp" />
 </LinearLayout>
