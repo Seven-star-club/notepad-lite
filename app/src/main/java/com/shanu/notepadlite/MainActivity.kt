@@ -31,14 +31,8 @@ class MainActivity : AppCompatActivity() {
         //listOfNotes.add(Notes(3,"R",
         //    "R is very good language as lorem ipsum sit dolor amet."))
 
-
-
         // Loading entries from database
         loadQuery("%")
-
-
-
-
 
     }
 
@@ -46,19 +40,18 @@ class MainActivity : AppCompatActivity() {
         val dbConnect = databaseManager(this)
         val projections = arrayOf("ID","Title","Description")
         val selectionArgs = arrayOf(title)
-        val cursor = dbConnect.Query(projections,"Title like ? and name like ?",selectionArgs,"Title")
+        val cursor = dbConnect.Query(projections,"Title like ?",selectionArgs,"Title")
         if(cursor.moveToFirst()){
             do{
                 val id = cursor.getInt(cursor.getColumnIndex("ID"))
                 val name = cursor.getString(cursor.getColumnIndex("Title"))
                 val des = cursor.getString(cursor.getColumnIndex("Description"))
-
                 listOfNotes.add(Notes(id,name,des))
 
 
             }while (cursor.moveToNext())
         }
-        val myAdapter = MyNotesAdapter(listOfNotes)
+        val myAdapter = MyNotesAdapter(this,listOfNotes)
         lvNotes.adapter = myAdapter
 
 
@@ -104,8 +97,10 @@ class MainActivity : AppCompatActivity() {
 
     inner class MyNotesAdapter: BaseAdapter {
         var listOfNotesAdapter=ArrayList<Notes>()
-        constructor(listOfNotesAdapter:ArrayList<Notes>):super(){
+        var context:Context?=null
+        constructor(context: Context,listOfNotesAdapter:ArrayList<Notes>):super(){
             this.listOfNotesAdapter = listOfNotesAdapter
+            this.context = context
 
 
         }
@@ -128,6 +123,16 @@ class MainActivity : AppCompatActivity() {
             var myNote = listOfNotesAdapter[position]
             myView.titleBox.text = myNote.noteName
             myView.contentBox.text = myNote.noteDes
+
+            myView.deleteButton.setOnClickListener{
+                var dbManager = databaseManager(this.context!!)
+                val selectionArgs=arrayOf(myNote.noteId.toString())
+
+                dbManager.Delete("ID=?",selectionArgs)
+                Toast.makeText(this.context,"The note was deleted",Toast.LENGTH_SHORT).show()
+                loadQuery("%")
+
+            }
 
             return myView
         }
