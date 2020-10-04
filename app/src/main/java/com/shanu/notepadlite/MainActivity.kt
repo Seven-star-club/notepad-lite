@@ -24,15 +24,43 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         // Dummy Data.
-        listOfNotes.add(Notes(1,"Python",
-            "Python 3 is very good language as lorem ipsum sit dolor amet."))
-        listOfNotes.add(Notes(2,"Javascript",
-            "Javascript is very good language as lorem ipsum sit dolor amet."))
-        listOfNotes.add(Notes(3,"R",
-            "R is very good language as lorem ipsum sit dolor amet."))
+        //listOfNotes.add(Notes(1,"Python",
+         //   "Python 3 is very good language as lorem ipsum sit dolor amet."))
+        //listOfNotes.add(Notes(2,"Javascript",
+        //    "Javascript is very good language as lorem ipsum sit dolor amet."))
+        //listOfNotes.add(Notes(3,"R",
+        //    "R is very good language as lorem ipsum sit dolor amet."))
 
+
+
+        // Loading entries from database
+        loadQuery("%")
+
+
+
+
+
+    }
+
+    fun loadQuery(title:String){
+        val dbConnect = databaseManager(this)
+        val projections = arrayOf("ID","Title","Description")
+        val selectionArgs = arrayOf(title)
+        val cursor = dbConnect.Query(projections,"Title like ? and name like ?",selectionArgs,"Title")
+        if(cursor.moveToFirst()){
+            do{
+                val id = cursor.getInt(cursor.getColumnIndex("ID"))
+                val name = cursor.getString(cursor.getColumnIndex("Title"))
+                val des = cursor.getString(cursor.getColumnIndex("Description"))
+
+                listOfNotes.add(Notes(id,name,des))
+
+
+            }while (cursor.moveToNext())
+        }
         val myAdapter = MyNotesAdapter(listOfNotes)
         lvNotes.adapter = myAdapter
+
 
 
     }
@@ -47,6 +75,7 @@ class MainActivity : AppCompatActivity() {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 Toast.makeText(applicationContext,query,Toast.LENGTH_SHORT).show()
                 //TODO: Search Database
+                loadQuery("%" + query + "%")
                 return false
 
             }

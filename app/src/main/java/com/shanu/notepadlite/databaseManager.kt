@@ -2,8 +2,10 @@ package com.shanu.notepadlite
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.database.sqlite.SQLiteQueryBuilder
 import android.widget.Toast
 
 class databaseManager {
@@ -44,5 +46,14 @@ class databaseManager {
     fun Insert(value:ContentValues):Long{
         val ID = sqlDB!!.insert(dbTable,"",value)
         return ID
+    }
+
+    fun Query(projection:Array<String>,selection:String,selectionArgs:Array<String>,sortOrder:String):Cursor{
+        var dbQuery = SQLiteQueryBuilder()
+        dbQuery.tables = dbTable
+        val myCursor = dbQuery.query(sqlDB,projection,selection,selectionArgs,null,null,sortOrder)
+        return myCursor
+
+
     }
 }
