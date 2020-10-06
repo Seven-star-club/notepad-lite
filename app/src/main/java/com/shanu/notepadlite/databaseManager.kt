@@ -61,4 +61,9 @@ class databaseManager {
 
 
     }
+
+    fun Update(values:ContentValues,selection:String,selectionArgs: Array<String>):Int{
+        var count = sqlDB!!.update(dbTable,values,selection,selectionArgs)
+        return count
+    }
 }

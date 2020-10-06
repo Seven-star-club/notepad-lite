@@ -36,6 +36,11 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        loadQuery("%")
+    }
+
     fun loadQuery(title:String){
         val dbConnect = databaseManager(this)
         val projections = arrayOf("ID","Title","Description")
@@ -129,13 +134,27 @@ class MainActivity : AppCompatActivity() {
                 val selectionArgs=arrayOf(myNote.noteId.toString())
 
                 dbManager.Delete("ID=?",selectionArgs)
-                Toast.makeText(this.context,"The note was deleted",Toast.LENGTH_SHORT).show()
                 loadQuery("%")
+                Toast.makeText(this.context,"The note was deleted",Toast.LENGTH_SHORT).show()
+
 
             }
+            myView.editButton.setOnClickListener (View.OnClickListener {
+                GoToUpdate(myNote)
+
+
+            })
 
             return myView
         }
+
+    }
+    fun GoToUpdate(note:Notes){
+        val intent = Intent(this,AddNotesPage::class.java)
+        intent.putExtra("ID",note.noteId)
+        intent.putExtra("Name",note.noteName)
+        intent.putExtra("Des",note.noteDes)
+        startActivity(intent)
 
     }
 
