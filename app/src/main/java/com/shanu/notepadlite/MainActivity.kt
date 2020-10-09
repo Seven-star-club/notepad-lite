@@ -23,13 +23,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        // Dummy Data.
-        //listOfNotes.add(Notes(1,"Python",
-         //   "Python 3 is very good language as lorem ipsum sit dolor amet."))
-        //listOfNotes.add(Notes(2,"Javascript",
-        //    "Javascript is very good language as lorem ipsum sit dolor amet."))
-        //listOfNotes.add(Notes(3,"R",
-        //    "R is very good language as lorem ipsum sit dolor amet."))
 
         // Loading entries from database
         loadQuery("%")
